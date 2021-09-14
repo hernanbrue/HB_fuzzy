@@ -40,7 +40,7 @@ public class fuzzyController : MonoBehaviour
     {
         posicion_en_y = gameObject.transform.position.y;
 
-        caos = Random.Range(-100, 100);
+        caos = Random.Range(-10, 10);
 
 
         gravedad = Physics.gravity.y;
