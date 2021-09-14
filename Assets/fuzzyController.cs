@@ -40,7 +40,7 @@ public class fuzzyController : MonoBehaviour
     {
         posicion_en_y = gameObject.transform.position.y;
 
-        caos = Random.Range(-10, 10);
+        caos = Random.Range(-500, 500);
 
 
         gravedad = Physics.gravity.y;
@@ -49,10 +49,10 @@ public class fuzzyController : MonoBehaviour
         aplicar_logica_difusa();
 
 
-        velocidad_en_Y += (gravedad - velocidad_ventilador + caos) * 0.00015f;
+        velocidad_en_Y = (gravedad - velocidad_ventilador + caos) * 0.001f;
 
         //en la siguiente línea obtengo el rigidbody del círculo y le cambip la posición de acuerdo a la previamente calculada
-        gameObject.GetComponent<Rigidbody2D>().position += new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, -velocidad_en_Y);
+        gameObject.GetComponent<Rigidbody2D>().position = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, velocidad_en_Y);
 
         texto.text = gameObject.GetComponent<Rigidbody2D>().position.y.ToString();
 
@@ -74,7 +74,6 @@ public class fuzzyController : MonoBehaviour
         lejosA = membresia_grado(distancia, 240, 300);
         AreaLejos = area_triangular(lejosA, 60)/2;
 
-        Debug.Log(AreaCerca);
 
         cercaB = membresia_trapezoide(distancia, -180, -120, -80, -20);
         normalB = membresia_trapezoide(distancia, -280, -240, -160, -120);
@@ -82,7 +81,9 @@ public class fuzzyController : MonoBehaviour
 
         //DESFUZZIFICACIÓN
 
-        suma_ponderada = (centrado * AreaCentrado + cercaA * AreaCerca + normalA * AreaNormal + lejosA * AreaLejos + cercaB * AreaCerca + normalB * AreaNormal + lejosB * AreaLejos);
+        //suma_ponderada = (centrado * AreaCentrado + cercaA * AreaCerca + normalA * AreaNormal + lejosA * AreaLejos + cercaB * AreaCerca + normalB * AreaNormal + lejosB * AreaLejos);
+        suma_ponderada = (centrado * gravedad + cercaA * 2 + normalA * 4 + lejosA + cercaB * 14 + normalB * 15.5f + lejosB * 18);
+
 
         velocidad_ventilador = suma_ponderada / (centrado + cercaA + normalA + lejosA + cercaB + normalB + lejosB);
 
