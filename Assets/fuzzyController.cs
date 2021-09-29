@@ -49,7 +49,7 @@ public class fuzzyController : MonoBehaviour
         aplicar_logica_difusa();
 
 
-        velocidad_en_Y = (gravedad - velocidad_ventilador + caos) * 0.001f;
+        velocidad_en_Y = (gravedad - velocidad_ventilador + caos) * 0.01f;
 
         //en la siguiente línea obtengo el rigidbody del círculo y le cambip la posición de acuerdo a la previamente calculada
         gameObject.GetComponent<Rigidbody2D>().position = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, velocidad_en_Y);
@@ -81,8 +81,8 @@ public class fuzzyController : MonoBehaviour
 
         //DESFUZZIFICACIÓN
 
-        //suma_ponderada = (centrado * AreaCentrado + cercaA * AreaCerca + normalA * AreaNormal + lejosA * AreaLejos + cercaB * AreaCerca + normalB * AreaNormal + lejosB * AreaLejos);
-        suma_ponderada = (centrado * gravedad + cercaA * 2 + normalA * 4 + lejosA + cercaB * 14 + normalB * 15.5f + lejosB * 18);
+        suma_ponderada = (centrado * AreaCentrado + cercaA * AreaCerca + normalA * AreaNormal + lejosA * AreaLejos + cercaB * AreaCerca + normalB * AreaNormal + lejosB * AreaLejos);
+        //suma_ponderada = (centrado * gravedad + cercaA * 2 + normalA * 4 + lejosA + cercaB * 14 + normalB * 15.5f + lejosB * 18);
 
 
         velocidad_ventilador = suma_ponderada / (centrado + cercaA + normalA + lejosA + cercaB + normalB + lejosB);
